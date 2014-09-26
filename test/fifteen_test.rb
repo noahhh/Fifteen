@@ -18,17 +18,32 @@ class FifteenTest < Minitest::Test
 end
 
 
-# count = 0
-# @player1.delete_at(count)
-# if count == 0
-#   print first = @player1
-# elsif count == 1
-#   print second = @player1
-# elsif count == 2
-#   print third = @player1
-# elsif count == 3
-#   print fourth == 4
-# else
-#   print "error"
+#
+# if @player1[0] + @player1[1] + @player1[3] == 15
+#   puts "Player wins!"
+#   play_again
+# elsif @player1[0] + @player1[2] + @player1[3] == 15
+#   puts "Player wins!"
+#   play_again
+# elsif @player1[1] + @player1[2] + @player1[3] == 15
+#   puts "Player wins!"
+#   play_again
 # end
-# count += 1
+# if @player2[0] + @player2[1] + @player2[3] == 15
+#   puts "Computer wins!"
+#   play_again
+# elsif @player2[0] + @player2[2] + @player2[3] == 15
+#   puts "Computer wins!"
+#   play_again
+# elsif @player2[1] + @player2[2] + @player2[3] == 15
+#   puts "Computer wins!"
+#   play_again
+# end
+# if @deck == []
+#   puts "Nobody wins"
+#   play_again
+# end
+# if @player1.size > 4 && @player2.size > 4
+#   winning_with_five
+# end
+#end
