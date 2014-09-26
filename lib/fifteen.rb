@@ -16,7 +16,6 @@
       num2 = answer - guess2
       puts "The computer picked #{guess2}"
       puts "The number was #{answer}"
-      puts " "
       if num1 < 0
         num1.abs
         # puts num1.abs
@@ -35,31 +34,31 @@
         comp_pick
         winning
       elsif num1 == num2
-        puts "Nobody wins. Try again."
+        puts "Nobody wins.  Try again."
         who_goes_first
       end
     end
 
+
     def pick1
       puts "Pick a number #{@deck}"
-      if @player1 != []
-        puts "Your cards are #{@player1}"
-      end
       pick = gets.chomp.to_i
+      if @deck.include?(pick)
       @player1 << pick.to_i
+      end
       if @deck.include?(pick)
         @deck.delete_at(@deck.find_index(pick))
       else
         puts "Number not available, try again"
         pick1
       end
+      puts "Your cards are #{@player1}"
       puts "The remaining cards are #{@deck}"
       puts " "
     end
 
     def comp_pick
       puts "Computers turn"
-      puts " "
       pick2 = @deck.sample
       @player2 << pick2.to_i
       if @deck.include?(pick2)
@@ -90,25 +89,56 @@
       end
     end
 
+    def sum(array)
+      array.inject{|sum, x| sum + x}
+    end
+
     def winning_with_four
-      count = 1
-      until count == 5
-        try = @player1
-        try.rotate!(count).pop
-        if try.reduce(:+) == 15
+        hand = @player1.combination(3).to_a
+        if hand.any?{ |combination| sum(combination) == 15 }
           puts "Player wins!"
+          play_again
         end
-        count += 1
-      end
-      until count == 5
-        try2 = @player2
-        try2.rotate!(count).pop
-        if try2.reduce(:+) == 15
-          puts "Computer wins!"
-        end
-        count += 1
-      end
-      play_again
+
+
+      # count = 1
+      # until count == 5
+      # try = @player1
+      # puts "I'M HERE"
+      # try.rotate!(count).pop
+      #   if try.reduce(:+) == 15
+      #     puts "Player wins!"
+      #   end
+      # count += 1
+      # end
+    #
+      # if @player1[0] + @player1[1] + @player1[3] == 15
+      #   puts "Player wins!"
+      #   play_again
+      # elsif @player1[0] + @player1[2] + @player1[3] == 15
+      #   puts "Player wins!"
+      #   play_again
+      # elsif @player1[1] + @player1[2] + @player1[3] == 15
+      #   puts "Player wins!"
+      #   play_again
+      # end
+      # if @player2[0] + @player2[1] + @player2[3] == 15
+      #   puts "Computer wins!"
+      #   play_again
+      # elsif @player2[0] + @player2[2] + @player2[3] == 15
+      #   puts "Computer wins!"
+      #   play_again
+      # elsif @player2[1] + @player2[2] + @player2[3] == 15
+      #   puts "Computer wins!"
+      #   play_again
+      # end
+      # if @deck == []
+      #   puts "Nobody wins"
+      #   play_again
+      # end
+      # if @player1.size > 4 && @player2.size > 4
+      #   winning_with_five
+      # end
     end
 
     # def winning_with_five
@@ -139,7 +169,7 @@
     # end
 
     def play
-      who_goes_first
+      #who_goes_first
       until winning
         pick1
         winning
