@@ -4,45 +4,26 @@ class Fifteen
     @player1 = []
     @player2 = []
     @deck = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    who_goes_first
   end
 
   def who_goes_first
-    puts "To decide who goes first, pick a number between 1 and 10"
-    answer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample
-    guess1 = gets.chomp.to_i
-    guess2 = rand(1..10)
-    num1 = answer - guess1
-    num2 = answer - guess2
-    puts "The computer picked #{guess2}"
-    puts "The number was #{answer}"
-    if guess1 > 10
-      puts "No.  Between 1 and 10"
-      who_goes_first
-    elsif guess1 < 0
-      puts "No.  Between 1 and 10"
+    puts "Choose between 1 or 2"
+    answer = rand(1..2)
+    number = gets.chomp.to_i
+    if number > 2 || number < 1
+      puts "Wrong."
       who_goes_first
     end
-    if num1 < 0
-      num1.abs
-    end
-    if num2 < 0
-      num2.abs
-    end
-    if num1 < num2
-      puts "player goes first"
-      pick1
+    if number == answer
+      puts "Player goes first"
+        play
+    else
+      puts "Computer goes first"
       comp_pick
-      winning
-    elsif num1 > num2
-      puts "computer goes first"
-      comp_pick
-      winning
-    elsif num1 == num2
-      puts "Nobody wins.  Try again."
-      who_goes_first
+      play
     end
   end
-
 
   def pick1
     puts "Pick a number #{@deck}"
@@ -51,7 +32,7 @@ class Fifteen
       @player1 << pick.to_i
     end
     if @deck.include?(pick)
-      @deck.delete_at(@deck.find_index(pick))
+      @deck.delete(pick)
     else
       puts "Number not available, try again"
       pick1
@@ -66,7 +47,7 @@ class Fifteen
     pick2 = @deck.sample
     @player2 << pick2.to_i
     if @deck.include?(pick2)
-      @deck.delete_at(@deck.find_index(pick2))
+      @deck.delete(pick2)
     else
       puts "Out of numbers"
       winning
@@ -95,22 +76,19 @@ class Fifteen
   end
 
   def play
-    who_goes_first
     until winning
       pick1
-      winning
       comp_pick
-      winning
     end
   end
 
   def play_again
     puts "Would you like to play again? (y/n)"
     answer = gets.chomp.downcase
-    if answer == "y"
+    if answer == "y" || answer == "yes"
       game = Fifteen.new
       game.play
-    elsif answer == "n"
+    elsif answer == "n" || answer == "no"
       puts "Goodbye."
       exit
     else
@@ -119,5 +97,6 @@ class Fifteen
     end
   end
 end
+
 game = Fifteen.new
 game.play
