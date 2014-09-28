@@ -1,49 +1,38 @@
 require "minitest/autorun"
 require "fifteen"
+#require_relative
+#::Unit::TestCase
+class FifteenTest < Minitest::Unit::TestCase
+	# def setup
+	# 	@game = Fifteen.new
+	# end
 
-class FifteenTest < Minitest::Test
-   def initialize
-      @game = Fifteen.new
-   end
-  # def test_if_game_has_two_players
-  #   @game = Fifteen.new
-  #   refute nil @game.@player1
-  #   refute nil @game.@player2
-  # end
+	# def test_who_goes_first_player_can_only_pick_1_or_2
+	# end
 
-  def test_deck_has_values
-      assert_equal @deck, [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  end
+	def test_player_can_not_pick_above_or_below_1_through_9
+		pick = 47
+		assert_equal @deck.include?(pick), false
+	end
 
+	def test_player_can_only_pick_what_is_in_deck
+		@deck = [1, 2, 3, 4, 6, 7, 8, 9]
+		pick = 5
+		assert_equal @deck.include?(pick), false
+	end
+
+	def test_can_only_win_with_3_cards_as_15
+		game = Fifteen.new
+		@player1 = [4, 6, 3, 2]
+		assert_equal game.winning, false
+	end
+
+	def test_game_ends_when_someone_hits_15_with_3_cards
+		game = Fifteen.new
+		@player1 = [8, 6, 1]
+		assert_equal game.winning, true
+	end
+
+	# def play_again_only_takes_y_yes_n_no
+	# end
 end
-
-
-#
-# if @player1[0] + @player1[1] + @player1[3] == 15
-#   puts "Player wins!"
-#   play_again
-# elsif @player1[0] + @player1[2] + @player1[3] == 15
-#   puts "Player wins!"
-#   play_again
-# elsif @player1[1] + @player1[2] + @player1[3] == 15
-#   puts "Player wins!"
-#   play_again
-# end
-# if @player2[0] + @player2[1] + @player2[3] == 15
-#   puts "Computer wins!"
-#   play_again
-# elsif @player2[0] + @player2[2] + @player2[3] == 15
-#   puts "Computer wins!"
-#   play_again
-# elsif @player2[1] + @player2[2] + @player2[3] == 15
-#   puts "Computer wins!"
-#   play_again
-# end
-# if @deck == []
-#   puts "Nobody wins"
-#   play_again
-# end
-# if @player1.size > 4 && @player2.size > 4
-#   winning_with_five
-# end
-#end
