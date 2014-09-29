@@ -2,6 +2,11 @@ require "minitest/autorun"
 require "fifteen"
 #require_relative
 #::Unit::TestCase
+
+# I couldn't actually run my tests, I kept receiving the error
+# /Users/noahholmes/Desktop/TIY/Week2/fifteen/lib/fifteen.rb:13:in `gets': No such file or directory @ rb_sysopen - test/**/*_test.rb (Errno::ENOENT)
+# But this is what I would have tried starting with
+
 class FifteenTest < Minitest::Unit::TestCase
 	# def setup
 	# 	@game = Fifteen.new
@@ -19,6 +24,13 @@ class FifteenTest < Minitest::Unit::TestCase
 		@deck = [1, 2, 3, 4, 6, 7, 8, 9]
 		pick = 5
 		assert_equal @deck.include?(pick), false
+	end
+
+	def test_once_a_number_is_picked_its_removed_from_deck
+    @deck = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    pick = 1
+    @cards.delete(pick)
+    assert_equal [2, 3, 4, 5, 6, 7, 8, 9], cards
 	end
 
 	def test_can_only_win_with_3_cards_as_15
