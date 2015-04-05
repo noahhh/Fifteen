@@ -1,5 +1,6 @@
 class Fifteen
   attr_accessor :player1, :player2, :deck
+  
   def initialize
     @player1 = []
     @player2 = []
@@ -10,8 +11,8 @@ class Fifteen
   def who_goes_first
     puts "Choose between 1 or 2"
     answer = rand(1..2)
-    number = gets.chomp.to_i # Test isn't liking gets
-    if number > 2 || number < 1 # Player can't pick under 1 or above 2
+    number = gets.chomp.to_i
+    if number > 2 || number < 1
       puts "Wrong."
       who_goes_first
     end
@@ -25,13 +26,13 @@ class Fifteen
     end
   end
 
-  def pick1 # pick for players hand
+  def pick1
     puts "Pick a number #{@deck}"
     pick = gets.chomp.to_i
-    if @deck.include?(pick) # If deck includes #, put it in hand
+    if @deck.include?(pick)
       @player1 << pick.to_i
     end
-    if @deck.include?(pick) # If deck includes #, delete it from deck
+    if @deck.include?(pick)
       @deck.delete(pick)
     else
       puts "Number not available, try again"
@@ -42,34 +43,43 @@ class Fifteen
     puts " "
   end
 
-  def comp_pick # pick for computers hand
+  def comp_pick
     puts "Computers turn"
     pick2 = @deck.sample
-    @player2 << pick2.to_i # If deck includes #, put it in hand
+    @player2 << pick2.to_i
     if @deck.include?(pick2)
-      @deck.delete(pick2) # If deck includes #, delete it from deck
+      @deck.delete(pick2)
     else
       puts "Out of numbers"
       winning
       play_again
     end
-    puts "The computer grabs the #{pick2}"
-    puts "The computers cards are #{@player2}"
+      puts "The computer grabs the #{pick2}"
+    if @player2.size > 1
+      puts "The computers cards are #{@player2}"
+    end
     puts " "
   end
 
-  def sum(array) # To use in winning
-    array.inject{|sum, x| sum + x} #Take sum and next number, and continously add them
+  def sum(array)
+    array.inject{|sum, x| sum + x}
   end
 
-  def winning # check combinations for equalling 15
-    hand = @player1.combination(3).to_a # combination makes every possible combination from array with (3) numbers from it
+  def player_wins?
+    hand = @player1.combination(3).to_a
+    hand.any?{ |combination| sum(combination) == 15 }
+  end
+
+  def computer_wins?
     hand2 = @player2.combination(3).to_a
-    if hand.any?{ |combination| sum(combination) == 15 } # uses sum method from above
+    hand2.any?{ |combination| sum(combination) == 15 }
+  end
+
+  def winning
+    if player_wins?
       puts "Player wins!"
       play_again
-    end
-    if hand2.any?{ |combination| sum(combination) == 15 } # uses sum method from above
+    elsif computer_wins?
       puts "Computer wins!"
       play_again
     end
